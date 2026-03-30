@@ -18,6 +18,7 @@ export default defineConfig({
       usePolling: true,
       interval: 1000,
     },
+    allowedHosts: [process.env.ALLOWED_HOST],
     proxy: {
       '/api': {
         target: process.env.API_PROXY_TARGET || 'http://backend:3000',
