@@ -2,7 +2,9 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
 import { env } from './config/env';
+import { swaggerSpec } from './config/swagger';
 import { httpLogger } from './middleware/logger.middleware';
 import { errorHandler } from './middleware/error.middleware';
 import apiRoutes from './routes';
@@ -21,6 +23,9 @@ export function createApp() {
 
   // Body parsing
   app.use(express.json());
+
+  // Swagger UI
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // API routes
   app.use('/api', apiRoutes);

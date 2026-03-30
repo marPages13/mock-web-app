@@ -1,6 +1,8 @@
 # MockWebApp
 
-Full-stack web application — social network / discussion feed — designed for simple Docker deployment and fast local development.
+Full-stack web application — social network / discussion feed 
+
+_Warning_: This is a vibe-coded demo app for experimentation only - not production-ready. It's mainly used to test deployments with a database, MinIO, and Redis.
 
 ## Features
 
@@ -34,6 +36,7 @@ After starting with Docker:
 | Frontend | `http://localhost:5173` | Main application |
 | Backend API | `http://localhost:3000/api` | Express API |
 | Healthcheck API | `http://localhost:3000/api/health` | Backend + DB health check |
+| Swagger UI | `http://localhost:3000/api/docs` | Interactive API documentation |
 | MinIO API | `http://localhost:9000` | Public files (`avatars`, `attachments`) |
 | MinIO Console | `http://localhost:9001` | MinIO admin |
 | phpMyAdmin | `http://localhost:8080` | MySQL administration |
@@ -168,17 +171,6 @@ Useful parameters for `GET /api/messages`:
 |---|---|---|
 | `GET` | `/api/presence/stream` | SSE presence stream |
 
-## Current UI
-
-The interface currently includes:
-
-- A full-width navbar with branding and light/dark toggle
-- A centered discussion feed
-- An input bar docked at the bottom of the screen
-- A status bar docked at the bottom for presence info
-- Initial load of the latest messages
-- Regular polling for new messages
-
 ## Project Structure
 
 ```text
@@ -196,8 +188,6 @@ MockWebApp/
 
 ## Notes
 
-- There is no Swagger UI currently exposed, even though some routes contain Swagger annotations.
-- `phpMyAdmin` is connected to the `mysql` service from `docker-compose`.
 - To fully reset local data:
 
 ```bash
@@ -226,15 +216,3 @@ Defined via:
 
 - `ADMIN_EMAIL`
 - `ADMIN_PASSWORD`
-
-## Current State
-
-The project runs in Docker development with:
-
-- Working authentication
-- Messages and avatars stored on MinIO
-- Presence via Redis
-- Infinite scroll for older messages
-- Polling for new messages
-- Persistent dark theme
-- Frontend hot reload compatible with Docker/Windows
