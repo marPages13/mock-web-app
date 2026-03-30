@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
+import path from 'path';
 
-dotenv.config();
+// Loads root .env for local dev; silently ignored in Docker (vars already injected by env_file)
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
 function requireEnv(name: string): string {
   const value = process.env[name];
@@ -36,7 +38,7 @@ export const env = {
   },
 
   log: {
-    level: optional('LOG_LEVEL', 'info'),
+    level: optional('LOG_LEVEL', 'http'),
   },
 
   admin: {
@@ -52,6 +54,13 @@ export const env = {
     bucketAvatars: optional('MINIO_BUCKET_AVATARS', 'avatars'),
     bucketAttachments: optional('MINIO_BUCKET_ATTACHMENTS', 'attachments'),
     presignedUrlExpiry: parseInt(optional('MINIO_PRESIGNED_URL_EXPIRY', '3600'), 10),
+    // Public hostname/port that the browser can reach (may differ from internal Docker hostname)
+    publicEndpoint: optional('MINIO_PUBLIC_ENDPOINT', ''),
+    publicPort: parseInt(optional('MINIO_PUBLIC_PORT', '0'), 10),
+  },
+  redis: {
+    host: optional('REDIS_HOST', 'localhost'),
+    port: parseInt(optional('REDIS_PORT', '6379'), 10),
   },
 } as const;
 

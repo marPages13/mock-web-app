@@ -4,6 +4,20 @@ import logger from '../logger';
 
 const BUCKETS = [env.minio.bucketAvatars, env.minio.bucketAttachments];
 
+function publicReadPolicy(bucket: string): string {
+  return JSON.stringify({
+    Version: '2012-10-17',
+    Statement: [
+      {
+        Effect: 'Allow',
+        Principal: '*',
+        Action: ['s3:GetObject'],
+        Resource: [`arn:aws:s3:::${bucket}/*`],
+      },
+    ],
+  });
+}
+
 export async function initBuckets(): Promise<void> {
   for (const bucket of BUCKETS) {
     const exists = await minioClient.bucketExists(bucket);
@@ -13,6 +27,8 @@ export async function initBuckets(): Promise<void> {
     } else {
       logger.info(`MinIO bucket ready: ${bucket}`);
     }
+    // Allow anonymous read so the browser can fetch media directly
+    await minioClient.setBucketPolicy(bucket, publicReadPolicy(bucket));
   }
 }
 
@@ -25,13 +41,8 @@ export async function uploadFile(
   return objectName;
 }
 
-export async function getPresignedUrl(
-  bucket: string,
-  objectName: string,
-): Promise<string> {
-  return minioClient.presignedGetObject(
-    bucket,
-    objectName,
-    env.minio.presignedUrlExpiry,
-  );
+/** Build a plain public URL — no signature needed since the bucket is public-read. */
+export function getPublicUrl(bucket: string, objectName: string): string {
+  const protocol = env.minio.useSSL ? 'https' : 'http';
+  return `${protocol}://${env.minio.publicEndpoint}:${env.minio.publicPort}/${bucket}/${objectName}`;
 }

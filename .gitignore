@@ -1,0 +1,6 @@
+.claude
+.env
+*.sqlite
+node_modules/
+backend/dist/
+frontend/dist/
