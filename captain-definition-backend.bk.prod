@@ -1,0 +1,14 @@
+ {
+  "schemaVersion": 2,
+  "dockerfileLines": [
+                        "FROM node:25",
+                        "RUN mkdir -p /usr/src/app",
+                        "COPY ./backend /usr/src/app",
+                        "WORKDIR /usr/src/app",
+                        "RUN npm install",
+                        "RUN npm run build",
+                        "RUN npm prune --production && npm cache clean --force",
+                        "ENV NODE_ENV production",
+                        "CMD [ \"npm\", \"start\" ]"
+                    ]
+ }
