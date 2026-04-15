@@ -3,10 +3,10 @@
   "dockerfileLines": [
                         "FROM node:20-alpine",
                         "WORKDIR /app",
-                        "COPY /frontend/package*.json /app",
+                        "COPY /frontend/package*.json /app/",
                         "RUN npm install",
-                        "COPY /frontend/tsconfig.json /app",
-                        "COPY /frontend/src /app/src",
+                        "COPY /frontend/tsconfig.json /app/",
+                        "COPY /frontend/src /app/src/",
                         "CMD [\"npm\", \"run\", \"dev\"]"
                     ]
  }
