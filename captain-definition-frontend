@@ -3,7 +3,7 @@
   "dockerfileLines": [
                         "FROM node:25",
                         "RUN mkdir -p /usr/src/app",
-                        "COPY ./backend /usr/src/app",
+                        "COPY ./frontend /usr/src/app",
                         "WORKDIR /usr/src/app",
                         "RUN npm install",
                         "RUN npm run build",
