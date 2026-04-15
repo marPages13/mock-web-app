@@ -7,7 +7,7 @@
                         "RUN npm install",
                         "COPY /backend/tsconfig.json /app",
                         "COPY /backend/src /app/src",
-                        "CMD ["npm", "run", "dev"]"
+                        "CMD [\"npm\", \"run\", \"dev\"]"
                     ]
  }
 
