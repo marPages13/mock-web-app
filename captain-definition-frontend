@@ -5,8 +5,7 @@
                         "WORKDIR /app",
                         "COPY /frontend/package*.json /app/",
                         "RUN npm install",
-                        "COPY /frontend/tsconfig.json /app/",
-                        "COPY /frontend/src /app/src/",
+                        "COPY /frontend/ /app/",
                         "CMD [\"npm\", \"run\", \"dev\"]"
                     ]
  }
